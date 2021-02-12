@@ -57,4 +57,13 @@ public class StatisticsService {
         return statisticsMap.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get()));
     }
+
+    /**
+     * May produce side-effects.
+     */
+    public void reset() {
+        statisticsMap.clear();
+        namedParameterJdbcTemplate.update("DELETE FROM COUNTRY_STATISTICS", Collections.emptyMap());
+
+    }
 }

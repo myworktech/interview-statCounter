@@ -22,6 +22,7 @@ public class StatisticsController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @ResponseBody
     public ResponseEntity<?> updateStatistics(@RequestParam String country) {
         if (COUNTRY_PATTERN.matcher(country).matches()) {
             statisticsService.updateCountry(country);
@@ -34,10 +35,14 @@ public class StatisticsController {
                     .body(new ErrorResponse(String.format("Invalid country name: %s", country)));
     }
 
-
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Long> reportStatistics() {
         return statisticsService.report();
+    }
+
+    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    public void resetStatistics() {
+        statisticsService.reset();
     }
 }

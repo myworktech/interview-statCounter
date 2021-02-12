@@ -16,7 +16,7 @@ public class InvalidCountryTest {
     private static final RestTemplate restTemplate = new RestTemplate();
 
     @Test
-    public void timedTest() throws Throwable {
+    public void invalidCountryTest() {
         try {
             restTemplate.put("http://localhost:8080/update?country=qwe", null);
             fail();

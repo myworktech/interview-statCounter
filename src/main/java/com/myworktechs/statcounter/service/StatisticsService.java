@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -13,11 +12,13 @@ import java.util.stream.Collectors;
 @Service
 public class StatisticsService {
 
+    private final ConcurrentMap<String, AtomicLong> statisticsMap;
     private final StatisticsDao statisticsDao;
-    private final ConcurrentMap<String, AtomicLong> statisticsMap = new ConcurrentHashMap<>();
 
     @Autowired
-    public StatisticsService(StatisticsDao statisticsDao) {
+    public StatisticsService(ConcurrentMap<String, AtomicLong> statisticsMap,
+                             StatisticsDao statisticsDao) {
+        this.statisticsMap = statisticsMap;
         this.statisticsDao = statisticsDao;
     }
 
@@ -34,9 +35,7 @@ public class StatisticsService {
             AtomicLong previous = statisticsMap.putIfAbsent(country, atomicLong);
             atomicLong = previous != null ? previous : atomicLong;
         }
-        long counterForCountry = atomicLong.incrementAndGet();
-
-        statisticsDao.saveItem(counterForCountry, country);
+        atomicLong.incrementAndGet();
     }
 
     public Map<String, Long> report() {

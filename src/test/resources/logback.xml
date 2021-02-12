@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>

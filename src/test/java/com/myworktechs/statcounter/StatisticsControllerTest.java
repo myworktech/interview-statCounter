@@ -40,15 +40,15 @@ public class StatisticsControllerTest {
         countDownLatch.await();
         long stopTime = System.currentTimeMillis();
 
-
+        Thread.sleep(100L);
         String responseString = restTemplate.getForObject("http://localhost:8080/report", String.class);
         Map<String, Long> response = objectMapper.readValue(responseString, new TypeReference<Map<String, Long>>() {
         });
         System.out.println("Report: " + responseString);
         System.out.println("Time consumed, ms: " + (stopTime - startTime) );
 
-        assertEquals((long) response.get("ru"), 10_000L);
-        assertEquals((long) response.get("cy"), 10_000L);
+        assertEquals((long) response.get("ru"), 50_000L);
+        assertEquals((long) response.get("cy"), 50_000L);
     }
 
     private void reset() {
@@ -66,7 +66,7 @@ public class StatisticsControllerTest {
 
         @Override
         public void run() {
-            for (int j = 0; j < 1000; j++) {
+            for (int j = 0; j < 5000; j++) {
                 restTemplate.put("http://localhost:8080/update?country=" + country, null);
             }
             countDownLatch.countDown();

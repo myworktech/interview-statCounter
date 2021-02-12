@@ -24,14 +24,6 @@ public class StatisticsDao {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public void saveItem(long counterForCountry, String country) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("country", country);
-        parameterSource.addValue("counter", counterForCountry);
-
-        namedParameterJdbcTemplate.update(MERGE_ITEM, parameterSource);
-    }
-
     public void clear() {
         namedParameterJdbcTemplate.update(DELETE_ALL, Collections.emptyMap());
     }
@@ -46,5 +38,17 @@ public class StatisticsDao {
             }
             return partnersMap;
         });
+    }
+
+    public void saveItem(Map<String, AtomicLong> statisticsMap) {
+        statisticsMap.forEach((key, value) -> saveItem(value.get(), key));
+    }
+
+    private void saveItem(long counterForCountry, String country) {
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("country", country);
+        parameterSource.addValue("counter", counterForCountry);
+
+        namedParameterJdbcTemplate.update(MERGE_ITEM, parameterSource);
     }
 }

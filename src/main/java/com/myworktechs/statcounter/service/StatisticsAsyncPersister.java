@@ -32,7 +32,7 @@ public class StatisticsAsyncPersister {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(
                 new CustomizableThreadFactory("ItemAsyncPersistenceProcessor"));
 
-        executor.scheduleWithFixedDelay(() -> statisticsDao.saveItem(
+        executor.scheduleWithFixedDelay(() -> statisticsDao.saveItems(
                 new HashMap<>(statisticsMap)),
                 10,
                 executeDelay,

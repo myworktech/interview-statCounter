@@ -40,7 +40,7 @@ public class StatisticsDao {
         });
     }
 
-    public void saveItem(Map<String, AtomicLong> statisticsMap) {
+    public void saveItems(Map<String, AtomicLong> statisticsMap) {
         statisticsMap.forEach((key, value) -> saveItem(value.get(), key));
     }
 

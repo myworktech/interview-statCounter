@@ -5,7 +5,7 @@
 4. mvn clean install -DskipTests=true
 
 ## RUN   
-1. cd statCounter/target
+1. cd target
 2. java -jar statCounter.jar либо chmod +x statCounter.jar && ./statCounter.jar
 
 ## TEST

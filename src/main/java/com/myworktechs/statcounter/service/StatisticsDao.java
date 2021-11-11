@@ -36,7 +36,7 @@ public class StatisticsDao {
                 long count = rs.getLong("COUNTER");
                 partnersMap.put(country, new AtomicLong(count));
             }
-            return partnersMap;
+            return Collections.unmodifiableMap(partnersMap);
         });
     }
 
